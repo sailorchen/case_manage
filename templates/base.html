@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>用例管理系统</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css'%}">
+		<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}">
+		<link rel="stylesheet" href="{% static 'mycss/common.css' %}">
+</head>
+<body>
+	<!-- 顶部区域 -->
+	<div class="pg_header">
+		<div class="logo left">
+			<a href="#">
+				<img src="{% static 'images/logo.png' %}" alt="">
+			</a>
+			<span>用例管理系统</span>
+		</div>
+		<div class="person_info right">
+            <img src="{% static 'images/user.png' %}">
+            <span>用户名<br>chen</span>
+        </div>
+	</div>
+	<!-- 左边导航条和内容显示区域 -->
+	<div class="pg_content">
+<!-- 		左边导航条区域 -->
+	    <div class="menu">
+		    <ul class="nav nav-stacked nav-pills" style="padding-left: 40px; padding-top: 10px;">
+				<li role="presentation">
+					<a href="{% url 'versions' %}">版本管理</a>
+				</li>
+				<li role="presentation">
+					<a href="{% url 'models' %}">模块管理</a>
+				</li>
+				<li role="presentation">
+					<a href="{% url 'testcases' %}">用例管理</a>
+				</li>
+		    </ul>
+	    </div>
+<!-- 	    右边显示区域 -->
+	    <div class="content">
+<!-- 	    搜索筛选区域 -->
+		{% block search %}
+		{% endblock %}
+	
+<!-- 		显示区域 -->
+		{% block content %}
+		{% endblock %}
+	    </div>
+	</div>
+    <div class="pg_footer">
+		<p>CopyRight</p>
+    </div>
+</body>
+</html>

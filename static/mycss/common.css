@@ -1,0 +1,69 @@
+html,body{
+	height: 100%;
+}
+body{
+       margin: 0 auto;
+}
+.pg_header{
+	position: fixed;
+	top: 0;
+    height: 48px;
+    width: 100%;
+    background-color: #2459a2;
+    color: white;
+}
+.pg_content .menu{
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    background-color: #dddddd;
+}
+.pg_content .content{
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 202px;
+/*    background-color: darkturquoise;*/
+    overflow: auto;
+    min-width: 980px;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.pg_header .logo{
+    height: 48px;
+    width: 200px;
+    text-align: center;
+    color: white;
+}
+.pg_header .logo a img{
+    height: 48px;
+    width: 50px;
+}
+.pg_header .logo span{
+	margin-top: 10px;
+    float: right;
+}
+.pg_header .person_info{
+    position: relative;
+    height: 48px;
+    width: 160px;
+}
+ .pg_header .person_info img{
+    border: 0;
+    height: 48px;
+    width: 50px;
+    /*使用border-radius可以定义边框的圆角程度*/
+    border-radius: 50%;
+}
+.pg_header .person_info span{
+	margin-top: 10px;
+	float: right;
+	padding-right:50px;
+}

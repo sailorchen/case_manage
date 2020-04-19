@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+	<form action="{% url 'add_module' %}" method="POST" name="add_module">
+		{% csrf_token %} 
+		<input type="text" name="module_name" placeholder="请输入模块名称">
+		<input type="submit" value="保存">
+	</form>
+{% endblock %}
