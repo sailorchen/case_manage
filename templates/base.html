@@ -19,10 +19,14 @@
 			<span>用例管理系统</span>
 		</div>
 		<div class="person_info right">
-            <img src="{% static 'images/user.png' %}">
-            <span>用户名<br>chen</span>
+            <img class="dropdown" src="{% static 'images/user.png' %}">
+            <span>
+            	<a href="{% url 'log_out' %}" style="color: white;">退出</a><br>
+            	ahu
+            </span>      
         </div>
 	</div>
+
 	<!-- 左边导航条和内容显示区域 -->
 	<div class="pg_content">
 <!-- 		左边导航条区域 -->
@@ -39,10 +43,12 @@
 				</li>
 		    </ul>
 	    </div>
+
 <!-- 	    右边显示区域 -->
 	    <div class="content">
 <!-- 	    搜索筛选区域 -->
 		{% block search %}
+
 		{% endblock %}
 	
 <!-- 		显示区域 -->

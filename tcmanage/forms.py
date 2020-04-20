@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from .models import TcVersion,TcModule
 
 class LoginForm(forms.Form):
-	username = forms.CharField(label='用户名')
-	password = forms.CharField(label='密码')
+	username = forms.CharField(label='用户名',max_length=20)
+	password = forms.CharField(label='密码',max_length=20)
 
 	def clean(self):
 		username = self.cleaned_data['username']
@@ -21,10 +21,10 @@ class LoginForm(forms.Form):
 
 
 class RegForm(forms.Form):
-	username = forms.CharField(label='用户名')
-	phone = forms.CharField(label='手机号')
-	password = forms.CharField(label='密码')
-	password_again = forms.CharField(label='再次输入密码')
+	username = forms.CharField(label='用户名',max_length=20)
+	phone = forms.CharField(label='手机号',max_length=11)
+	password = forms.CharField(label='密码',max_length=20)
+	password_again = forms.CharField(label='再次输入密码',max_length=20)
 
 
 	def clean_username(self):

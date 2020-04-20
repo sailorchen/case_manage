@@ -11,4 +11,5 @@ urlpatterns = [
     path('testcases/<int:case_id>', views.get_case_detail,name='case_detail'),
     path('login', views.login,name='login'),
     path('register', views.register,name='register'),
+    path('log_out', views.log_out,name='log_out'),
 ]
