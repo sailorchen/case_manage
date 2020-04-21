@@ -5,14 +5,14 @@
 
 
 {% block search %}
-			<form class="navbar-form navbar-left" role="search">
-				  <div class="form-group">
-				    <input type="text" class="form-control" placeholder="请输入版本名称">
-				  </div>
-				  <button type="submit" class="btn btn-default">搜索</button>
-			</form>
-			<a class="btn btn-primary" href="{% url 'add_version' %}" role="button" 
-			style="padding-top: 20px; float: right; line-height: 1;padding-right:30px;">添加版本</a>
+	<form class="navbar-form navbar-left" role="search" action="{% url 'versions' %}">
+		  <div class="form-group">
+		    <input name="version_name" type="text" class="form-control" placeholder="请输入版本名称">
+		  </div>
+		  <button type="submit" class="btn btn-default">搜索</button>
+	</form>
+	<a class="btn btn-primary" href="{% url 'add_version' %}" role="button" 
+	style="padding-top: 20px; float: right; line-height: 1;padding-right:30px;">添加版本</a>
 {% endblock %}
 
 {% block content %}
@@ -22,7 +22,13 @@
 		  <th>模块名称</th>
 		  <th>创建时间</th>
 		</tr>
-			{% for version in version_list %}
+			{% if search_version %}
+			{% for foo in search_version %}
+			<td>{{ foo.version_name }}</td>
+			<td>{{foo.create_time }}</td>
+			{%endfor%}
+			{% else %}
+						{% for version in version_list %}
 			<tr>
 				<td>
 				{{ version.version_name }}
@@ -33,8 +39,9 @@
 			</tr>
 				{% empty %}
 				<tr>
-					<td>还没有版本，赶快去新建吧~</td>
+					<td>暂无数据</td>
 				</tr>
 			{% endfor %}
+			{% endif %}
 	</table>
 {% endblock %}

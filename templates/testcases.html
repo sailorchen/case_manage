@@ -3,7 +3,8 @@
 {% load static %}
 
 {% block search %}
-			<form class="navbar-form navbar-left" role="search">
+			<form class="navbar-form navbar-left" role="search" method="GET">
+						{% csrf_token %} 
 				  <div class="form-group">
 				    <input type="text" class="form-control" placeholder="请输入用例名称">
 				  </div>

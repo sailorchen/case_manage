@@ -18,11 +18,16 @@ def check_login(func):
 			return redirect(request.GET.get('from', reverse('login')))
 	return wrapper
 
-#获取所有的版本,需要登录
+#获取所有的版本,搜索版本,需要登录
 def get_version(request):
 	context = {}
-	version_list = TcVersion.objects.all()
-	context['version_list'] = version_list
+	version_form = request.GET.get('version_name')
+	if version_form:
+		search_version = TcVersion.objects.filter(version_name=version_form)
+		context['search_version'] = search_version
+	else:
+		version_list = TcVersion.objects.all()
+		context['version_list'] = version_list
 	context['username'] = request.user.username
 	return render(request,'versions.html',context)
 
@@ -36,23 +41,32 @@ def add_version(request):
 		version_name = request.POST.get('version_name',"")
 		if version_name:
 			context['version_name'] = version_name
+			context['username'] = request.user.username
 			add_version = TcVersion()
 			add_version.version_name=version_name
 			add_version.save()
 			return redirect('versions')
+
 			
-#获取所有的模块,需要登录
+#获取所有的模块,搜索模块,需要登录
 @check_login
 def get_module(request):
 	context = {}
-	module_list = TcModule.objects.all()
-	context['module_list'] = module_list
+	context['username'] = request.user.username
+	module_form = request.GET.get("module_name")
+	if module_form:
+		search_module = TcModule.objects.filter(module_name=module_form)
+		context['search_module'] = search_module
+	else:
+		module_list = TcModule.objects.all()
+		context['module_list'] = module_list
 	return render(request,'models.html',context)
 
 #添加模块,需要登录
 @check_login
 def add_module(request):
 	context = {}
+	context['username'] = request.user.username
 	if request.method == 'GET':		
 		return render(request,'add_module.html',context)
 	elif request.method =='POST':
@@ -68,6 +82,7 @@ def add_module(request):
 @check_login
 def get_testcase(request):
 	context = {}
+	context['username'] = request.user.username
 	case_list = TcCase.objects.all()
 	context['case_list'] = case_list
 	return render(request,'testcases.html',context)
@@ -76,6 +91,8 @@ def get_testcase(request):
 #添加用例,需要登录
 @check_login
 def add_testcase(request):
+	context = {}
+	context['username'] = request.user.username
 	if request.method == 'POST':
 		case_form = CaseForm(request.POST)
 		if case_form.is_valid():
@@ -95,10 +112,8 @@ def add_testcase(request):
 				tc_comment=case_comment,tc_user=case_assign)
 			case.save()
 			return redirect(request.GET.get('from', reverse('testcases')))
-
 	else:
 		case_form = CaseForm()
-	context = {}
 	context['case_form'] = case_form
 	return render(request,'add_testcase.html',context)
 
@@ -106,6 +121,7 @@ def add_testcase(request):
 @check_login
 def get_case_detail(request,case_id):
 	context = {}
+	context['username'] = request.user.username
 	context['case_detail'] =get_object_or_404(TcCase,pk=case_id)
 	return render(request,'case_detail.html',context)
 
@@ -123,7 +139,6 @@ def login(request):
 			return redirect(request.GET.get('from', reverse('versions')))
 	else:
 		login_form = LoginForm()
-
 	context['login_form'] = login_form
 	return render(request,'login.html',context)
 
@@ -154,6 +169,5 @@ def register(request):
 
 #退出-->清除session,跳转到登录页面
 def log_out(request):
-	print (request.session)
 	auth.logout(request)
 	return redirect(request.GET.get('from', reverse('login')))
