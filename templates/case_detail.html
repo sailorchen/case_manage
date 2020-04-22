@@ -1,5 +1,90 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{case_detail.case_name}}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<table>
+				<th>用例详情</th>	
+				<tbody>		
+				<tr>
+					<td>用例名称:</td>
+					<td>{{case_detail.case_name}}</td>
+				</tr>
+				<tr>	
+					<td>用例类型:</td>
+					<td>{{case_detail.tc_style}}</td>
+				</tr>
+				<tr>	
+					<td>用例等级:</td>
+					<td>{{case_detail.tc_level}}</td>
+				</tr>
+				<tr>	
+					<td colspan="5">前置条件:</td>
+					<td colspan="5">{{case_detail.tc_presetting}}</td>
+				</tr>
+				<tr>	
+					<td>测试步骤:</td>
+					<td>{{case_detail.tc_steps}}</td>
+				</tr>
+				<tr>	
+					<td>关联模块:</td>
+					<td>{{case_detail.tc_module}}</td>
+				</tr>
+				<tr>	
+					<td>关联版本:</td>
+					<td>{{case_detail.tc_version}}</td>
+				</tr>
+				<tr>	
+					<td>期望结果:</td>
+					<td>{{case_detail.tc_except_result}}</td>
+				</tr>
+				<tr>	
+					<td>备注:</td>
+					<td>{{case_detail.tc_comment}}</td>
+				</tr>
+				</tbody>	
+			</div>
+			</table>
+		</div>
+		<div class="col-md-4">	
+			<div>
+				测试人:{{ case_detail.tc_user }}
+			</div>
+			<div>
+				
+				{% if case_detail.tc_actual_result == 'PASS' %}
+				测试结果
+			    <p class="green"> {{case_detail.tc_actual_result}} </p>
+			    {% elif case_detail.tc_actual_result == 'FAIL' %}
+			    测试结果
+			    <p class="red"> {{case_detail.tc_actual_result}} </p>
+			    {% else %}
+			    <form method="POST" action="{% url 'commit_result' %}">
+			    	{% csrf_token %}
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="resultradio" id="PASS" value="PASS" checked>
+				    PASS
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="resultradio" id="FAIL" value="FAIL">
+				    FAIL
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="resultradio" id="BLOCK" value="BLOCK">
+				   	BLOCK
+				  </label>
+				</div>
+				<input type="hidden" name="case_id" value={{ case_detail.id }}>
+				<input type="submit" value="提交">
+				</form>
+			    {% endif %}
+	    	</div>
+		</div>		
+	</div>
 {% endblock %}

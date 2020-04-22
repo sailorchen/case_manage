@@ -139,8 +139,20 @@ def add_testcase(request):
 def get_case_detail(request,case_id):
 	context = {}
 	context['username'] = request.user.username
-	context['case_detail'] =get_object_or_404(TcCase,pk=case_id)
+	case_detail = get_object_or_404(TcCase,pk=case_id)
+	context['case_detail'] =case_detail
 	return render(request,'case_detail.html',context)
+
+#提交数据
+def commit_result(request):
+	if request.method=='POST':
+		result = request.POST.get('resultradio')
+		#更新测试结果
+		case_id= request.POST.get('case_id')
+		TcCase.objects.filter(pk=case_id).update(tc_actual_result=result)
+	else:
+		pass
+	return redirect(request.GET.get('from', reverse('testcases')))
 
 #登录
 def login(request):
@@ -186,5 +198,6 @@ def register(request):
 
 #退出-->清除session,跳转到登录页面
 def log_out(request):
+	request.session.flush()
 	auth.logout(request)
 	return redirect(request.GET.get('from', reverse('login')))
