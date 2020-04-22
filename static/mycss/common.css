@@ -67,3 +67,11 @@ body{
 	float: right;
 	padding-right:50px;
 }
+.footer{
+    position:fixed;
+    float: right;
+    padding-right: 30px;
+}
+.footer span{
+    float: left;
+}

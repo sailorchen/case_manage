@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import TcVersion,TcModule,TcUser,TcCase
+from django.core.paginator import Paginator
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.urls import reverse
 from .forms import LoginForm,RegForm,CaseForm
-
+from .models import TcVersion,TcModule,TcUser,TcCase
 
 # Create your views here.
 
@@ -27,7 +27,24 @@ def get_version(request):
 		context['search_version'] = search_version
 	else:
 		version_list = TcVersion.objects.all()
+		paginator = Paginator(version_list,10)  #每10条1页
+		page_num = request.GET.get('page',1)  #获取第一页
+		page_of_versions = paginator.get_page(page_num)
+		current_page_num = page_of_versions.number  #获得当前页
+		range_page = list(range(max(current_page_num-2,1),current_page_num))+\
+                list(range(current_page_num, min(current_page_num+2,paginator.num_pages)+1))
+		if range_page[0]!=1:
+			range_page.insert(0,1)
+		if range_page[-1]!=paginator.num_pages:
+			range_page.append(paginator.num_pages)
+		if range_page[0]-1>=2:
+			range_page.insert(0,'...')
+		if paginator.num_pages-range_page[-1]>=2:
+			range_page.append('...')
+		context['page_of_versions']=page_of_versions
+		context['versions'] = page_of_versions.object_list
 		context['version_list'] = version_list
+		context['range_page'] = range_page
 	context['username'] = request.user.username
 	return render(request,'versions.html',context)
 
