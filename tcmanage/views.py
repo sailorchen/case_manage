@@ -6,6 +6,9 @@ from django.urls import reverse
 from .forms import LoginForm,RegForm,CaseForm
 from .models import TcVersion,TcModule,TcUser,TcCase
 
+#导入上传文件的路径
+from mytc.settings import MEDIA_ROOT
+
 # Create your views here.
 
 #登录装饰器
@@ -103,6 +106,18 @@ def get_testcase(request):
 	case_list = TcCase.objects.all()
 	context['case_list'] = case_list
 	return render(request,'testcases.html',context)
+
+#上传测试用例
+def upload_case(request):
+	context = {}
+	if request.method == 'POST':
+		upload_file = request.FILES.get('file')
+		#如果没有上传文件，则进行下一步
+		if upload_file:
+			with open(MEDIA_ROOT+"/"+upload_file.name,'wb') as f:
+				for i in upload_file.readlines():
+					f.write(i)
+	return redirect(request.GET.get('from', reverse('testcases')))
 
 
 #添加用例,需要登录

@@ -81,3 +81,13 @@ body{
 .green{
     color:green;
 }
+.fileinput-button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+ .fileinput-button input{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
