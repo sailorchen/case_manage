@@ -10,6 +10,7 @@ urlpatterns = [
     path('add_testcase',views.add_testcase,name='add_testcase'),
     path('testcases/<int:case_id>', views.get_case_detail,name='case_detail'),
     path('commit_result',views.commit_result,name='commit_result'),
+    path('delete_case/<int:case_id>',views.delete_case,name='delete_case'),
     path('login', views.login,name='login'),
     path('register', views.register,name='register'),
     path('log_out', views.log_out,name='log_out'),

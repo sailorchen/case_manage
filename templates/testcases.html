@@ -19,21 +19,23 @@
 		<tr>
 		  <th>用例名称</th>
 		  <th>所属模块</th>
-		  <th>用例类型</th>
 		  <th>版本</th>
+		  <th>用例类型</th>		  
 		  <th>创建时间</th>
 		  <th>指派测试人</th>
 		  <th>测试结果</th>
+		  <th>操作</th>
 		</tr>
 		{% for case in case_list %}
 			<tr>
 				<td> <a href="{% url 'case_detail' case.pk %}">{{ case.case_name }}</a></td>
 				<td>{{ case.tc_module }}</td>
-				<td>{{ case.tc_style }}</td>
 				<td>{{ case.tc_version }}</td>
+				<td>{{ case.tc_style }}</td>			
 				<td>{{ case.create_time }}</td>
 				<td>{{ case.tc_user }}</td>
 				<td>{{ case.tc_actual_result }}</td>
+				<td> <a href="{% url 'delete_case' case.pk %}"> 删除 </a></td>
 			</tr>
 		{% empty %}
 		<tr>

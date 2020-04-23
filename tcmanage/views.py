@@ -143,6 +143,13 @@ def get_case_detail(request,case_id):
 	context['case_detail'] =case_detail
 	return render(request,'case_detail.html',context)
 
+#删除用例，需要登录
+def delete_case(request,case_id):
+	context = {}
+	context['username'] = request.user.username
+	TcCase.objects.filter(pk=case_id).delete()
+	return redirect(request.GET.get('from', reverse('testcases')))
+
 #提交数据
 def commit_result(request):
 	if request.method=='POST':
