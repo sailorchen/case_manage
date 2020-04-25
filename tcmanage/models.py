@@ -34,7 +34,7 @@ class TcCase(models.Model):
 	styles = (('UI','UI'),('Function','功能'),('Perfermance','性能'),)
 	tc_style = models.CharField(verbose_name='用例类型',max_length=20,choices=styles,default='Function')
 	#用例等级 【冒烟、level1,level2,level3】
-	levels = (('SMOKING','冒烟'),('Function','LEVEL0'),('LEVEL1','LEVEL1'),('LEVEL2','LEVEL2'),)
+	levels = (('SMOKING','冒烟'),('LEVEL0','LEVEL0'),('LEVEL1','LEVEL1'),('LEVEL2','LEVEL2'),)
 	tc_level = models.CharField(verbose_name='用例等级',max_length=20,choices=levels,default='SMOKING')
 	#前置条件
 	tc_presetting = models.TextField(verbose_name='前置条件',blank=True)
@@ -50,7 +50,7 @@ class TcCase(models.Model):
 	results = (('PASS','通过'),('FAIL','失败'),('BLOCK','阻塞'),('NA','无法测试'),('NotTest','未测试'))
 	tc_actual_result = models.CharField(verbose_name='实际结果',max_length=20,choices=results,default='NotTest')
 	#备注
-	tc_comment = models.TextField(verbose_name='备注显示')
+	tc_comment = models.TextField(verbose_name='备注显示',blank=True)
 	#指派测试人
 	tc_user = models.CharField(verbose_name='分配人',max_length=20)
 	create_time = models.DateField(verbose_name='创建时间',auto_now_add=True)
